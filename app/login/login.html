@@ -1,11 +1,11 @@
 <div ng-controller="LoginCtrl">
-	<form class="ui form raised segment sc-login-form" ng-submit="login()">
+	<form class="ui form raised segment" id="sc-login-form" ng-submit="login()">
   		<div class="two fields">
             <div class="required field">
           		<label>Имя пользователя</label>
           		<div class="ui icon input" ng-class="{'error': usernameError}">
-                	<input type="text" name="username" placeholder="Имя пользователя" ng-model="username" ng-change="clearErrors()">
-                <i class="user icon"></i>
+					<input type="text" name="username" placeholder="Имя пользователя" ng-model="username" ng-change="clearErrors()">
+                	<i class="user icon"></i>
               	</div>
             </div>
             <div class="required field">

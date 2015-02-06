@@ -4,20 +4,27 @@ var express = require("express"),
     LocalStrategy = require("passport-local"),
     mongoose = require("mongoose"),
     session = require("express-session"),
-    bodyParser = require("body-parser");
+    bodyParser = require("body-parser"),
+    cookieParser = require("cookie-parser");
 
 app.use(express.static(__dirname + '/bower_components'));
 app.use(express.static(__dirname + '/app'));
 
-app.use(bodyParser.urlencoded({extended:false}));
-app.use(bodyParser.json());
-app.use(passport.initialize());
-app.use(session({
-    secret : "bsu schedule",
-    resave: false,
-    saveUninitialized: false
-}));
-app.use(passport.session()); // persistent login sessions
+
+passport.use(new LocalStrategy(
+    function(username, password, done) {
+        User.findOne({ 'username' : username }, function (err, user) {
+            if (err) { return done(err); }
+            if (!user) {
+                return done(null, false);
+            }
+            if (!user.validPassword(password)) {
+                return done(null, false);
+            }
+            return done(null, user);
+        });
+    }
+));
 
 passport.serializeUser(function(user, done) {
     done(null, user.id);
@@ -29,8 +36,20 @@ passport.deserializeUser(function(id, done) {
     });
 });
 
+app.use(bodyParser.urlencoded({ extended:false }));
+app.use(bodyParser.json());
+app.use(cookieParser()); // read cookies (needed for auth)
+app.use(session({
+    secret : "bsuschedule",
+    resave: true,
+    saveUninitialized: true,
+    cookie : { maxAge: 2419200000 }
+}));
+app.use(passport.initialize());
+app.use(passport.session()); // persistent login sessions
+
 var User;
-var server = app.listen(8080, function () {
+var server = app.listen(8000, function () {
 
 	mongoose.connect('mongodb://anton.abramovich:9875321Velvifoz@ds055690.mongolab.com:55690/users');
     var db = mongoose.connection;
@@ -53,34 +72,16 @@ var server = app.listen(8080, function () {
     });
 
 	var host = server.address().address,
-  		port = server.address().port
+  		port = server.address().port;
 
   	console.log('App listening at http://%s:%s', host, port);
 
 });
 
-passport.use(new LocalStrategy(
-    function(username, password, done) {
-        User.findOne({ 'username' : username }, function (err, user) {
-            if (err) { return done(err); }
-            if (!user) {
-                return done(null, false, { message: 'Incorrect username.' });
-            }
-            if (!user.validPassword(password)) {
-                return done(null, false, { message: 'Incorrect password.' });
-            }
-            return done(null, user, { message: 'Success.' });
-        });
-    }
-));
-
-app.post("/login", function (req, res) {
-    passport.authenticate('local', function(err, user, info) {
-        res.json({
-            authenticated: !!user,
-            message: info.message
-        });
-    })(req, res);
+app.post("/login", passport.authenticate('local'), function (req, res) {
+    res.json({
+        authenticated: !!req.user
+    });
 });
 
 app.post("/checkUsername", function (req, res) {

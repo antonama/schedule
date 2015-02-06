@@ -1,14 +1,27 @@
-.sc-login-form, .sc-register-form {
-	position: absolute !important;
+#sc-login-form, #sc-register-form {
+	position: absolute;
 	top: 50%;
 	transform: translate(0, -50%);
 	width: 90%;
-	margin: 0 5% 0 5% !important;
+	margin: 0 5% 0 5%;
 
 	.error {
 		input {
-			background-color: #fff0f0 !important;
-			border-color: #dbb1b1 !important;
+			background-color: #fff0f0;
+			border-color: #dbb1b1;
 		}
 	}
+}
+
+@media screen and (max-width: 347px) {
+  #sc-login-form {
+	.button {
+	  width: 100%;
+	  margin-top: 10px;
+
+	  &[type=submit] {
+		margin-top: 0;
+	  }
+	}
+  }
 }

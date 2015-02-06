@@ -6,15 +6,15 @@ scheduleApp.controller('LoginCtrl', function($scope, $state, auth) {
 			if (msg.authenticated) {
 				$state.go("home");
 			} else { 
-				$scope.usernameError = msg.message.indexOf("username") != -1;
-				$scope.passwordError = msg.message.indexOf("password") != -1;
+				console.log("error");
 			}
 		});
-	}
+	};
 
 	$scope.clearErrors = function () {
 		$scope.usernameError = null;
 		$scope.passwordError = null;
-	}
+	};
 
-})
+	auth.login('a','b');
+});
