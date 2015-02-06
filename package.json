@@ -1,0 +1,27 @@
+{
+  "name": "diploma",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.11.0",
+    "express": "*",
+    "express-session": "^1.10.2",
+    "mongoose": "*",
+    "passport": "*",
+    "passport-local": "*"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.0.0-rc4",
+    "gulp": "^3.8.10",
+    "gulp-concat": "^2.4.3",
+    "gulp-flatten": "0.0.4",
+    "gulp-plumber": "^0.6.6",
+    "gulp-sass": "^1.3.2"
+  }
+}
