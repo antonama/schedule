@@ -13,7 +13,7 @@ var paths = {
         fonts: './app/css/fonts'
     };
 
-gulp.task('sass', ['fonts'], function () {
+gulp.task('sass', function () {
     gulp.src(paths.scss)
         .pipe(plumber())
         .pipe(sass())
