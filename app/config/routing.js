@@ -27,18 +27,21 @@ scheduleApp.config(function ($stateProvider, $urlRouterProvider) {
 
 scheduleApp.run(function ($rootScope, $state, auth, global) {
 	var unsubscribe = $rootScope.$on("$stateChangeStart", function (event, toState) {
-		if (toState.name != "register") {
+		if (toState.name != "register" && toState.name != "login") {
+			event.preventDefault();
+
+			global.loading = true;
 			auth.login().then(function (authenticated) {
 				if (authenticated) {
-					var stateToEnter = toState.name == "login" ? "home" : toState.name;
-					$state.go(stateToEnter);
 					unsubscribe();
+					$state.go(toState.name);
 				} else { 
 					$state.go("login");
 				}
+			}).finally(function () {
+				global.loading = false;
 			});
 		}
-		global.loading = false;		
 	});
 
 	$rootScope.global = global;

@@ -7,8 +7,7 @@ body {
 ui-view {
   min-height: 100%;
   display: block;
-  padding: 0 !important;
-  background-color: #f7f7f7 !important; }
+  padding: 0 !important; }
 
 .home-page {
   background-color: red; }
@@ -22,6 +21,9 @@ ui-view {
   #sc-login-form .error input, #sc-register-form .error input {
     background-color: #fff0f0;
     border-color: #dbb1b1; }
+  #sc-login-form .success input, #sc-register-form .success input {
+    background-color: #eeffe7;
+    color: #3c763d; }
 
 @media screen and (max-width: 347px) {
   #sc-login-form .button {
@@ -39,5 +41,4 @@ body {
 ui-view {
   min-height: 100%;
   display: block;
-  padding: 0 !important;
-  background-color: #f7f7f7 !important; }
+  padding: 0 !important; }

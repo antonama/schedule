@@ -1,17 +1,22 @@
-scheduleApp.controller('RegisterCtrl', function($scope, auth, global) {
+scheduleApp.controller('RegisterCtrl', function($scope, $state, auth, global) {
 	$scope.register = function () {
 		global.loading = true;
-		auth.register().then(function () {
+		auth.register($scope.username, $scope.password).then(function (authenticated) {
+			if (authenticated) {
+				$state.go("home");
+			}
 			global.loading = false;
 		})
 	}
 
 	$scope.checkUsername = function () {
-		$scope.usernameIsChecking = true;
-		auth.checkUsername().then(function (usernameIsNotAvailable) {
-			$scope.usernameIsChecking = false;
-			$scope.usernameIsNotAvailable = usernameIsNotAvailable;
-		});
+		if ($scope.username) {
+			$scope.usernameIsChecking = true;
+			auth.checkUsername($scope.username).then(function (err) {
+				$scope.usernameIsChecking = false;
+				$scope.usernameIsNotAvailable = err;
+			});
+		}
 	}
 	
 });

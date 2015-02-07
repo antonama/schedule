@@ -33,7 +33,7 @@ scheduleApp.factory("auth", function ($http) {
                 username: username,
                 password: password
             }).then(function (res) {
-                return res.data;
+                return res.data.authenticated;
             });
         },
 

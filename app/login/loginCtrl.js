@@ -7,8 +7,6 @@ scheduleApp.controller('LoginCtrl', function($scope, $state, auth, global) {
 				$state.go("home");
 			}, function (err) {
 				clearFields();
-			}).finally(function () {
-				global.loading = false;
 			});
 	};
 

@@ -5,7 +5,8 @@ var express = require("express"),
     mongoose = require("mongoose"),
     session = require("express-session"),
     bodyParser = require("body-parser"),
-    cookieParser = require("cookie-parser");
+    cookieParser = require("cookie-parser"),
+    uniqueValidator = require('mongoose-unique-validator');
 
 app.use(express.static(__dirname + '/bower_components'));
 app.use(express.static(__dirname + '/app'));
@@ -58,13 +59,22 @@ var server = app.listen(8000, function () {
     db.once('open', function () {
 
         var userSchema = mongoose.Schema({
-            username: String,
-            password: String
+            username: {
+                type: String,
+                required: "Username is required!",
+                unique: true
+            },
+            password: {
+                type: String,
+                required: "Password is required!"
+            }
         });
 
         userSchema.methods.validPassword = function (password) {
             return this.password == password;
         };
+
+        userSchema.plugin(uniqueValidator);
 
         User = db.model("User", userSchema);
 
@@ -100,10 +110,13 @@ app.get("/logout", function (req, res) {
 app.post("/checkUsername", function (req, res) {
     var username = req.body.username;
     User.find({ 'username' : username }, function (err, user) {
-        if (err) { res.status(500).end(); }
-        res.json({
-            error: !user
-        });
+        if (err) { 
+            res.end();
+        } else {
+            res.json({
+               error: !!user.length
+            });
+        }
     });
 });
 
@@ -114,14 +127,17 @@ app.post("/register", function (req, res) {
     var user = new User({
         username: username,
         password: password
-    });
+    }); 
 
     user.save(function (err, user) {
-        if (err) { res.status(500).end(); }
-        passport.authenticate('local', function (err, user) {
+        if (err) { 
+            res.send({
+                userDefined: true
+            });
+        } else {
             res.json({
                 authenticated: !!user
             });
-        });
+        }
     });
 });

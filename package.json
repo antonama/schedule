@@ -14,6 +14,7 @@
     "express": "*",
     "express-session": "^1.10.2",
     "mongoose": "*",
+    "mongoose-unique-validator": "^0.4.1",
     "passport": "*",
     "passport-local": "*"
   },
