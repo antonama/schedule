@@ -18,10 +18,11 @@
 	<script src="config/init.js"></script>
 	<script src="config/routing.js"></script>
 	<script src="services/auth.js"></script>
+	<script src="services/global.js"></script>
 	<script src="login/loginCtrl.js"></script>
 	<script src="login/registerCtrl.js"></script>
 </head>
 <body ng-app="schedule">
-	<ui-view></ui-view>
+	<ui-view class="ui segment" ng-class="{'loading': global.loading}"></ui-view>
 </body>
 </html>

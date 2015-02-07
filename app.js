@@ -43,7 +43,8 @@ app.use(session({
     secret : "bsuschedule",
     resave: true,
     saveUninitialized: true,
-    cookie : { maxAge: 2419200000 }
+    cookie : { maxAge: 2419200000 },
+    unset: 'destroy'
 }));
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
@@ -84,19 +85,31 @@ app.post("/login", passport.authenticate('local'), function (req, res) {
     });
 });
 
+app.get("/login", passport.authenticate('session'), function (req, res) {
+    res.json({
+        authenticated: !!req.user
+    });
+});
+
+app.get("/logout", function (req, res) {
+    req.session.destroy(function () {
+        res.end();
+    });
+});
+
 app.post("/checkUsername", function (req, res) {
-    var username = req.query.username;
+    var username = req.body.username;
     User.find({ 'username' : username }, function (err, user) {
         if (err) { res.status(500).end(); }
         res.json({
-            error: !!user
+            error: !user
         });
     });
 });
 
 app.post("/register", function (req, res) {
-    var username = req.query.username,
-        password = req.query.password;
+    var username = req.body.username,
+        password = req.body.password;
 
     var user = new User({
         username: username,
@@ -104,7 +117,11 @@ app.post("/register", function (req, res) {
     });
 
     user.save(function (err, user) {
-        if (err) { res.end(); }
-        res.send("Ok");
+        if (err) { res.status(500).end(); }
+        passport.authenticate('local', function (err, user) {
+            res.json({
+                authenticated: !!user
+            });
+        });
     });
 });

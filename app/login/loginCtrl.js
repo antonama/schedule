@@ -1,20 +1,18 @@
-scheduleApp.controller('LoginCtrl', function($scope, $state, auth) {
+scheduleApp.controller('LoginCtrl', function($scope, $state, auth, global) {
 
 	$scope.login = function () {
+		global.loading = true;
 		auth.login($scope.username, $scope.password)
-		.then(function (msg) {
-			if (msg.authenticated) {
+			.then(function (authenticated) {
 				$state.go("home");
-			} else { 
-				console.log("error");
-			}
-		});
+			}, function (err) {
+				clearFields();
+			}).finally(function () {
+				global.loading = false;
+			});
 	};
 
-	$scope.clearErrors = function () {
-		$scope.usernameError = null;
-		$scope.passwordError = null;
+	function clearFields () {
+		$scope.password = null;
 	};
-
-	auth.login('a','b');
 });

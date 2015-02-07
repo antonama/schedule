@@ -2,19 +2,29 @@ scheduleApp.factory("auth", function ($http) {
     return {
 
         login: function (username, password) {
-            return $http.post("/login", {
-                username: username,
-                password: password
-            }).then(function (userInfo) {
-                return userInfo.data;
-            });
+            var params = {},
+                method = "GET";
+
+            if (username && password) {
+                params.username = username;
+                params.password = password;
+                method = "POST";
+            }
+
+            return $http({
+                method: method,
+                url: "/login",
+                data: params
+            }).then(function (res) {
+                return res.data.authenticated;
+            })
         },
 
         checkUsername: function (username) {
             return $http.post("/checkUsername", {
                 username: username
-            }).then(function (userInfo) {
-                return userInfo.data;
+            }).then(function (res) {
+                return res.data.error;
             });
         },
 
@@ -22,8 +32,14 @@ scheduleApp.factory("auth", function ($http) {
             return $http.post("/register", {
                 username: username,
                 password: password
-            }).then(function (userInfo) {
-                return userInfo.data;
+            }).then(function (res) {
+                return res.data;
+            });
+        },
+
+        logout: function () {
+            return $http.get("/logout").then(function () {
+                location.reload();
             });
         }
     }

@@ -1,1 +1,3 @@
-var scheduleApp = angular.module("schedule", ["ui.router"]);
+var scheduleApp = angular.module("schedule", [
+	"ui.router"
+]);

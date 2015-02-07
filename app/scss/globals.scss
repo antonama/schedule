@@ -1,0 +1,14 @@
+html, body {
+	height: 100%;
+}
+
+body {
+	min-height: 100%;
+}
+
+ui-view {
+	min-height: 100%;
+	display: block;
+	padding: 0 !important;
+	background-color: rgb(247, 247, 247) !important;
+}
