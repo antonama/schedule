@@ -4,7 +4,7 @@
             <div class="required field">
           		<label>Имя пользователя</label>
           		<div class="ui icon input" ng-class="{'error': usernameIsNotAvailable, 'loading': usernameIsChecking, 'success' : !usernameIsNotAvailable && username && !usernameIsChecking }">
-                	<input type="text" name="username" placeholder="Имя пользователя" ng-model="username" ng-change="checkUsername()" ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }">
+                	<input type="text" name="username" placeholder="Имя пользователя" ng-model="username" ng-change="checkUsername()" ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }" autofocus>
                   <i class="icon user" ng-class="{'search': usernameIsChecking}"></i>
               	</div>
             </div>
