@@ -1,3 +1,23 @@
-.home-page {
-	background-color: red;
+.current-date {
+	font-weight: bold;
+}
+
+.info-cell {
+	position: relative;
+	padding: 30px 2px !important;
+	
+	.room, .teacher {
+		position: absolute;
+		color: #CCCCCC;
+		font-size: 0.8em;
+		left: 2px;
+	}
+
+	.room {
+		top: 2px;
+	}
+
+	.teacher {
+		bottom: 2px;
+	}
 }

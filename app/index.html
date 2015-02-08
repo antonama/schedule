@@ -11,6 +11,9 @@
 
 	<script src="jquery/dist/jquery.min.js"></script>
 
+	<script src="moment/moment.js"></script>
+	<script src="moment/locale/ru.js"></script>
+
 	<script src="angular/angular.min.js"></script>
 
 	<script src="angular-ui-router/release/angular-ui-router.min.js"></script>
@@ -19,8 +22,10 @@
 	<script src="config/routing.js"></script>
 	<script src="services/auth.js"></script>
 	<script src="services/global.js"></script>
+	<script src="services/schedule.js"></script>
 	<script src="login/loginCtrl.js"></script>
 	<script src="login/registerCtrl.js"></script>
+	<script src="home/homeCtrl.js"></script>
 </head>
 <body ng-app="schedule">
 	<ui-view class="ui segment basic" ng-class="{'loading': global.loading}"></ui-view>

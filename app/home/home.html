@@ -1,0 +1,22 @@
+<div ng-controller="HomeCtrl">
+	<div>
+		Сегодня <span class="current-date">{{date}}</span>
+	</div>
+
+	<table class="ui celled five column table">
+      <thead>
+        <tr>
+          <th ng-repeat="day in days">{{day}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="day in schedule">
+          <td ng-repeat="class in day track by $index" class="info-cell">
+         	<div class="room">{{class.room}}</div>
+          	<div class="title">{{class.title}}</div>
+          	<div class="teacher">{{class.teacher.name}}</div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+</div>

@@ -8,15 +8,7 @@ scheduleApp.config(function ($stateProvider, $urlRouterProvider) {
 	})
 	.state("home", {
 		url: "/home",
-		template: "<a href='javascript:void(0)' ng-click=logout()>Logout</a>",
-		controller: function ($scope, $state, auth, global) {
-			$scope.logout = function () {
-                global.loading = true;
-				auth.logout().then(function () {
-					$state.go("login");
-				});
-			}
-		}
+		templateUrl: "home/home.html"
 	})
 	.state("register", {
 		url: "/register",

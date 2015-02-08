@@ -9,8 +9,21 @@ ui-view {
   display: block;
   padding: 0 !important; }
 
-.home-page {
-  background-color: red; }
+.current-date {
+  font-weight: bold; }
+
+.info-cell {
+  position: relative;
+  padding: 30px 2px !important; }
+  .info-cell .room, .info-cell .teacher {
+    position: absolute;
+    color: #CCCCCC;
+    font-size: 0.8em;
+    left: 2px; }
+  .info-cell .room {
+    top: 2px; }
+  .info-cell .teacher {
+    bottom: 2px; }
 
 #sc-login-form, #sc-register-form {
   position: absolute;
