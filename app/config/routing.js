@@ -45,9 +45,7 @@ scheduleApp.run(function ($rootScope, $state, auth, global) {
 		}
 	}
 
-	var unsubscribe = $rootScope.$on("$stateChangeStart", function (event, toState) {
-		authenticateUser(event, toState);
-	});
+	var unsubscribe = $rootScope.$on("$stateChangeStart", authenticateUser);
 
 	// we need to handle user authorization both in here and login page - this is for synchronization
 	var unsubscribeOnLoginSuccess = $rootScope.$on("scLoginSuccess", function () {
